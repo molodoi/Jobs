@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<!-- 
+    	Ajouter notre menu dans une section native de Magento.
+		Nous créons notre titre « Jobs » qui aura comme parent « Magento_Backend::content » et qui aura comme identifiant « Ticme_Jobs::job_head »
+    	-->
+        <!--add id="Ticme_Jobs::job_head" title="Jobs" module="Ticme_Jobs" sortOrder="100" parent="Magento_Backend::content" resource="Ticme_Jobs::job_head" /-->
+        <!-- Ajout de notre menu dans une nouvelle section du Backend -->
+        <add id="Ticme_Jobs::job_head" title="Jobs" module="Ticme_Jobs" sortOrder="25" resource="Ticme_Jobs::job_head" />
+
+        <!-- 
+		Nous créons notre sous titre « Departments » qui aura comme parent « Ticme_Jobs::job_head » et qui aura comme identifiant « Ticme_Jobs::department » et comme action « jobs/department »
+    	-->
+        <add id="Ticme_Jobs::department" title="Departments" module="Ticme_Jobs" sortOrder="10" parent="Ticme_Jobs::job_head" action="jobs/department" resource="Ticme_Jobs::job" />
+        <!-- 
+		Nous créons notre sous titre « Jobs » qui aura comme parent « Ticme_Jobs::job_head » et qui aura comme identifiant « Ticme_Jobs::job » et comme action « jobs/job »
+    	-->
+        <add id="Ticme_Jobs::job" title="Jobs" module="Ticme_Jobs" sortOrder="20" parent="Ticme_Jobs::job_head" action="jobs/job" resource="Ticme_Jobs::job" />
+    </menu>
+</config>
+
+<!-- 
+Les valeurs action suivantes :
+– jobs/department
+– jobs/job
+
+Et si j’utilise vos souvenirs du chapitre précédent, vous devriez deviner le chemin réel utilisé par Magento 2 ainsi que le chemin des controllers qui vont avec !
+
+Les chemins réellement utilisés par Magento 2 sont :
+– jobs/department/index
+– jobs/job/index
+
+Ce qui nous donne les chemins des controller à créer :
+– app/code/Ticme/Jobs/Controller/Adminhtml/Department/Index.php
+– app/code/Ticme/Jobs/Controller/Adminhtml/Job/Index.php
+
+-->

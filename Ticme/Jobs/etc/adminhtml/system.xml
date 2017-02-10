@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- tab permet comme son nom l’indique de créer le nouvel onglet. Le sortOrder permet d’ajuster sa position dans la liste.  -->
+        <tab id="jobs" translate="label" sortOrder="1000">
+            <label>Jobs</label>
+        </tab>
+        <!-- 
+            section permet d’ajouter un élément à l’onglet que nous venons de créer. On l’associe à l’onglet créé avec la balise tab. Le label défini le texte à afficher dans le menu. Et la resource permet de créer le droit nécessaire pour visualiser le menu.
+        -->
+        <section id="jobs" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Jobs</label>
+            <tab>jobs</tab>
+            <resource>Maxime_Jobs::jobs</resource>
+            <!--
+                Group, car une section peut en contenir plusieurs. Ici nous n’en avons qu’un et nous mettons comme label « Department Configuration ».
+            
+                Ici nous n’avons qu’un seul store view, mais comme notre champ doit être éditable d’un store view à un autre, nous mettons les valeurs de ces 3 attributs à 1.
+
+                Magento va procéder de la sorte lors de la récupération :
+                – Si le champ a une portée à la vue boutique (showInStore), et qu’une valeur est définie, on la prend
+                – Sinon on regarde si le champ a une portée au website (showInWebsite), et qu’une valeur est définie, on la prend
+                – Sinon on prend la valeur par défaut (showInDefault)
+            -->
+            <group id="department" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <!-- 
+                    field, qui est notre champ de configuration. Ce champ est de type select, on définit son label et un commentaire pour le champ. Enfin on lui donne un source_model, qui permet de récupérer dynamiquement les options de notre select. Ici ce model natif de Magento 2 retourne un tableau « Yes/No ».
+                -->
+                <label>Department configuration</label>
+                <field id="view_list" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show job list</label>
+                    <comment>Show department's job list of the viewing department</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+       </section>
+    </system>
+</config>

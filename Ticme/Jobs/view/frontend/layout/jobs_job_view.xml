@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-right">
+    <head>
+    	<!-- 
+		https://www.maximehuran.fr/tp-page-visualisation-de-job-et-department/
+		
+    	Layout, et ajout du CSS
+		Nous allons désormais voir comment ajouter du CSS à notre template. Notez que le CSS que nous allons créer est situé dans le module. Il ne s’agit pas ici de la création d’un thème
+    	 -->
+        <css src="Ticme_Jobs::jobs.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Ticme\Jobs\Block\Job\View" name="jobs_job_view" template="jobs/job/view.phtml" />
+        </referenceContainer>
+    </body>
+</page>

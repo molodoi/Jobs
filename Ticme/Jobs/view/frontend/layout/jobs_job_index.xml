@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-right">
+	<!-- https://www.maximehuran.fr/mise-en-place-du-rendu-html-avec-module-magento-2/ -->
+    <body>
+    	<head>
+	        <css src="Maxime_Jobs::jobs.css"/>
+	    </head>
+        <referenceContainer name="content">
+            <block class="Ticme\Jobs\Block\Job\ListJob" name="jobs_list" template="jobs/list.phtml" />
+        </referenceContainer>
+    </body>
+</page>

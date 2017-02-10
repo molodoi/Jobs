@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-right">
+    <head>
+    	<!-- Si vous désirez ajouter un CSS à toutes les pages de votre site, vous pouvez créer le fichier suivant : default.xml -->
+        <css src="Ticme_Jobs::jobs.css"/>
+    </head>
+</page>

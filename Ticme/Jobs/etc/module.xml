@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+	<!-- https://www.maximehuran.fr/gestion-des-setups-sous-magento-2/ 
+		module.xml sert à gérer le mise à jour du module incrémenter de 1.0.0.n+1
+		et faire bin/magento setupr:upgrade 
+
+		- Le nom de notre module (name)
+		- La version du module (setup_version)
+	-->
+    <module name="Ticme_Jobs" setup_version="1.0.0.4" />
+</config>

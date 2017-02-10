@@ -1,0 +1,322 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <!-- 
+
+    Sert à afficher les éléments et contenu de la grille des départements 
+
+    Dans la première partie « Integration », on définit un provider (fournisseur). Ce provider est de type jobs_department_listing_data_source.
+
+C’est cette data source que nous déclarons dans la partie en dessous « Data source ».
+– class : c’est l’objet qui ca nous permettre de préciser le contenu que l’on va mettre dans notre grid.
+– name : le nom de notre dataProvider, on met le même que le dataSource.
+– primaryFieldName : le nom de notre colonne primaire
+– requestFieldName : le paramètre qui sera envoyé dans l’url pour envoyer la valeur du primaryFieldName
+
+La partie qui arrive ensuite est statique et fait appel à des éléments natifs de Magento.
+Seule exception le champ indexField, qui comme vous l’avez deviné, contient également le champ primaire de notre table.
+
+Nous allons maintenant passer par l’injecteur de dépendance afin de définir notre objet « DepartmentGridDataProvider », qui n’existe pour le moment nul part.
+     -->
+
+    <!-- Integration -->
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <!-- we define a provider -->
+            <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing_data_source</item>
+            <!-- same string as above -->
+            <item name="deps" xsi:type="string">jobs_department_listing.jobs_department_listing_data_source</item>
+        </item>
+
+        <!-- define column type spinner -->
+        <item name="spinner" xsi:type="string">jobs_department_columns</item>
+        <!-- Ajouter un bouton en haut de notre page -->
+        <!-- Button to add new item -->
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <!-- name : le nom de notre bouton -->
+                <item name="name" xsi:type="string">add</item>
+                <!-- label : le texte à l’intérieur du bouton -->
+                <item name="label" xsi:type="string" translate="true">Add New Department</item>
+                <!-- class : une classe html qui est ajoutée au bouton (il apparaîtra en orange avec la classe « primary ») -->
+                <item name="class" xsi:type="string">primary</item>
+                <!-- url : l’url de notre bouton, Magento tranformera les * par la page où nous sommes, donc « */*/new » deviendra « jobs/department/new » -->
+                <item name="url" xsi:type="string">*/*/new</item> <!-- magento will translate it by jobs/department/new -->
+            </item>
+        </item>
+    </argument>
+    <!-- Data source -->
+    <dataSource name="jobs_department_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+
+            <!-- class : c’est l’objet qui ca nous permettre de préciser le contenu que l’on va mettre dans notre grid. (di.xml) -->
+            <argument name="class" xsi:type="string">DepartmentGridDataProvider</argument> <!-- Data provider class -->
+
+            <!-- name : le nom de notre dataProvider, on met le même que le dataSource. -->
+            <argument name="name" xsi:type="string">jobs_department_listing_data_source</argument> <!-- provider defined above -->
+
+            <!-- primaryFieldName : le nom de notre colonne primaire -->
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument> <!-- Primary key -->
+
+            <!-- requestFieldName : le paramètre qui sera envoyé dans l’url pour envoyer la valeur du primaryFieldName -->
+            <argument name="requestFieldName" xsi:type="string">id</argument> <!-- URL name parameter -->
+ 
+            <!-- 
+            La partie ci-dessous est statique et fait appel à des éléments natifs de Magento.
+            Seule exception le champ indexField, qui comme vous l’avez deviné, contient également le champ primaire de notre table.
+             -->
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <!-- Primary key column name -->
+                        <item name="indexField" xsi:type="string">entity_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+        <!-- 
+            Nous allons maintenant passer par l’injecteur de dépendance (di.xml) afin de définir notre objet « DepartmentGridDataProvider », qui n’existe pour le moment nul part.
+         -->
+    </dataSource>
+
+    <!-- 
+        Création du container listing_top :
+        Nous allons ajouter des boutons d’actions. Cette partie nous l’appellerons listing_top et se situera entre le bouton Add New Department que l’on vient de créer plus haut dans Integration et la grid de contenu. Dans le XML elle se trouvera içi après le noeud dataSource :
+    -->
+    <!-- Container Listing Top -->
+    <container name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+            </item>
+        </argument>
+        <!-- Button to manage views -->
+        <bookmark name="bookmarks">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/bookmarks/bookmarks</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="mui/bookmark/save"/>
+                        <item name="deleteUrl" xsi:type="url" path="mui/bookmark/delete"/>
+                        <item name="namespace" xsi:type="string">jobs_department_listing</item>
+                    </item>
+                </item>
+            </argument>
+        </bookmark>
+        <!-- Button to manage columns -->
+        <container name="columns_controls">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsData" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.jobs_department_columns</item>
+                    </item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+                </item>
+            </argument>
+        </container>
+
+
+        <!-- Ajout de filtres dans une grid -->
+        <!-- Filters -->
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.listing_filters</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks:current.columns.${ $.index }.visible</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <!-- Department ID Filter -->
+            <filterRange name="department_id">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataScope" xsi:type="string">entity_id</item> <!-- Column name in DB -->
+                        <item name="label" xsi:type="string" translate="true">ID</item> <!-- Label on grid -->
+                        <item name="childDefaults" xsi:type="array">
+                            <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.listing_filters</item>
+                        </item>
+                    </item>
+                </argument>
+                <filterInput name="from">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataScope" xsi:type="string">from</item>
+                            <item name="label" xsi:type="string" translate="true">from</item>
+                            <item name="placeholder" xsi:type="string" translate="true">From</item>
+                        </item>
+                    </argument>
+                </filterInput>
+                <filterInput name="to">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataScope" xsi:type="string">to</item>
+                            <item name="label" xsi:type="string" translate="true">to</item>
+                            <item name="placeholder" xsi:type="string" translate="true">To</item>
+                        </item>
+                    </argument>
+                </filterInput>
+            </filterRange>
+            <!-- Department name Filter -->
+            <filterInput name="department_name">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataScope" xsi:type="string">name</item> <!-- Column name in DB -->
+                        <item name="label" xsi:type="string" translate="true">Name</item> <!-- Label on grid -->
+                    </item>
+                </argument>
+            </filterInput>
+        </filters>
+
+        <!-- Filter Search : Ajout d’un filtre fulltext -->
+        <!-- 
+        Nota :
+        Si vous tapez un mot clé comme « marketing » et que le filtre ne fonctionne pas.
+        Nous devons déclarer les colonnes que nous souhaitons utiliser dans la structure de notre table en BDD.
+        Pour cela, nous allons mettre à jour notre module, et y ajouter la création des index fulltext pour notre table des départements. 
+        -->
+        <filterSearch name="fulltext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing_data_source</item>
+                    <item name="chipsProvider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.listing_filters_chips</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.search</item>
+                    </item>
+                </item>
+            </argument>
+        </filterSearch>
+
+        <!-- 
+            Ajout des actions de masse (massActions)
+        -->
+        <!-- Mass action -->
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">jobs_department_listing.jobs_department_listing.jobs_department_columns.ids</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="jobs/department/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete items</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+
+        <!-- Pagination/Paging -->
+        <paging name="listing_paging">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.paging</item>
+                    </item>
+                    <item name="selectProvider" xsi:type="string">jobs_department_listing.jobs_department_listing.jobs_department_columns.ids</item>
+                    <item name="displayArea" xsi:type="string">bottom</item>
+                </item>
+            </argument>
+        </paging>
+
+    </container>
+
+    <!-- 
+        Création de nos colonnes :
+        Pour le moment nous faisons simple, nous avons deux colonnes : 
+    -->
+    <columns name="jobs_department_columns">
+        <!-- Ajouter des checkboxes au début de chaque ligne de notre grid. -->
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <!-- Bookmarks behaviour -->
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="controlVisibility" xsi:type="boolean">true</item>
+                    <!-- Bookmarks behaviour -->
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">jobs_department_listing.jobs_department_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+ 
+        <!-- Add columns with checkboxes -->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>                  
+
+
+        <!-- ID Column : l’identifiant de notre Department -->
+        <column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+ 
+        <!-- Name Column : le nom de notre Department-->
+        <column name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                </item>
+            </argument>
+        </column>
+
+
+        <!-- Action columns : Ajouter 2 actions : Editer et Supprimer -->
+        <!--
+        Vous remarquez que l’on déclare un objet Ticme\Jobs\Ui\Component\Listing\Column\DepartmentActions, nous allons le créer :
+app/code/Ticme/Jobs/Ui/Component/Listing/Column/DepartmentActions.php
+         -->
+        <actionsColumn name="actions" class="Ticme\Jobs\Ui\Component\Listing\Column\DepartmentActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+
+</listing>

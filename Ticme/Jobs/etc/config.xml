@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<!-- 
+		https://www.maximehuran.fr/mettre-en-place-une-configuration-dans-ladmin-magento-2/
+		– Le noeud default précise que la configuration saisie est à la portée « par défaut »
+		– Ensuite viennent les noeuds correspondants à la section, le group et le field déclarés dans le system.xml
+		– Dans le noeud du field, on met la valeur par défaut : 1 dans notre cas.
+
+		Si vous actualisez la page, le menu sera pré-sélectionné sur « Yes ».
+
+		Ajout de la valeur par défaut de la config
+
+		On peut également définir des valeurs par défaut pour un website ou un store, voici un exemple avec les 3 portées :
+	-->
+    <default>
+        <jobs>
+            <department>
+                <view_list>1</view_list>
+            </department>
+        </jobs>
+    </default>
+ 
+    <websites>
+        <websitecode>
+            <jobs>
+                <department>
+                    <view_list>1</view_list>
+                </department>
+            </jobs>
+        </websitecode>
+    </websites>
+ 
+    <stores>
+        <storeviewcode>
+            <jobs>
+                <department>
+                    <view_list>1</view_list>
+                </department>
+            </jobs>
+        </storeviewcode>
+    </stores>
+</config>

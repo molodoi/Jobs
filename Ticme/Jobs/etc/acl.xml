@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <!-- 
+        Gestion des ACL 
+        Vous voyez certainement le etc/adminhtml/menu.xml que l’on vient de créer car votre utilisateur à tous les droits. Mais selon la configuration des rôles et des utlisateur, votre utilisateur de l’admin peut ou ne peut pas voir certains liens.
+        Comme nous créons une nouvelle section, nous devons créer ses autorisations (ACL).
+        -->
+        <resources>
+            <!-- Admin menu -->
+            <resource id="Magento_Backend::admin">
+                <!--<resource id="Magento_Backend::content">-->
+                    <resource id="Ticme_Jobs::job_head" title="Jobs" sortOrder="25" >
+                        <resource id="Ticme_Jobs::department" title="Departments" sortOrder="10">
+                            <resource id="Ticme_Jobs::department_save" title="Save Department" sortOrder="10" />
+                            <resource id="Ticme_Jobs::department_delete" title="Delete Department" sortOrder="20" />
+                        </resource>
+                        <resource id="Ticme_Jobs::job" title="Jobs" sortOrder="20">
+                            <resource id="Ticme_Jobs::job_save" title="Save Job" sortOrder="10" />
+                            <resource id="Ticme_Jobs::job_delete" title="Delete Job" sortOrder="20" />
+                        </resource>
+                    </resource>
+                <!--</resource>-->
+
+                <!-- Admin config 
+                    Nous avons ajouté un nouveau noeud : Magento_Backend::stores
+                    Les 3 premiers niveaux ajoutés sont natifs magento.
+                    Le dernier noeud est celui de notre module : Maxime_Jobs::jobs
+                    Cet « id » correspond au noeud « resource » que nous avons déclaré dans le fichier précédent.
+                -->
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Ticme_Jobs::jobs" title="Jobs Section" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<!-- 
+		– group_id : permet de cibler les tâches à lancer, nous allons aborder ce point plus tard dans l’article
+		– name : le nom de notre tâche, il doit être unique
+		– instance : la classe qui va lancer notre tâche cron
+		– method : la méthode de notre classe qui sera appelée
+		– schedule : la périodicité de notre cron au Format Cron
+		– config_path : Vous pouvez mettre cette balise à la place de schedule. Cela permet de récupérer la périodicité du cron dans une configuration éditable en BO, nous allons le faire plus tard dans cet article
+	-->
+    <group id="ticme_jobs">
+        <job name="ticme_jobs_disable_jobs" instance="Ticme\Jobs\Cron\DisableJobs" method="execute">
+            <!-- Every five minutes -->
+            <schedule>*/5 * * * *</schedule>
+            <!--<config_path>jobs/cron/schedule</config_path>-->
+        </job>
+    </group>
+</config>

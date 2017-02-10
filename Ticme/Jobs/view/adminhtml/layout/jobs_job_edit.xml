@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<!-- Avant de créer notre formulaire, nous devons le définir dans un layou -->
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Ticme\Jobs\Block\Adminhtml\Job\Edit" name="jobs_job_edit"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="jobs" frontName="jobs">
+            <module name="Ticme_Jobs" />
+        </route>
+    </router>
+</config>
+
+<!--
+	router id="standard", qui nous permet de dire que c’est un controller « frontend », par opposition au routeur admin qui concerne le BO de Magento.
+	Le noeud route se décompose ainsi :
+	– id : identifiant unique de votre route.
+	– frontName : c’est la chaîne de caractère qui sera présente dans votre URL d’appel.
+	Puis vient le noeud module qui permet de définir :
+	– name : le module à appeler
+	– before : votre module devra passer en priorité par rapport au module défini
+	– after : votre module passera après le module défini
+	Les champs « before » et « after » sont facultatifs
+
+-->
