@@ -8,11 +8,7 @@ Content
 ========================
 Build a Magento Module 
 
-https://www.maximehuran.fr/tp-creer-la-grid-les-formulaires-et-les-controllers-pour-lobjet-job/
-
 Bug sur le TP 1 :
-- Sur l'Action : 
-https://github.com/molodoi/Jobs/blob/master/Ticme/Jobs/Controller/Adminhtml/Job/Edit.php
 - Problème de doublons (id&title||id&name) sur les filters :
 https://github.com/molodoi/Jobs/blob/master/Ticme/Jobs/view/adminhtml/ui_component/jobs_department_listing.xml
 https://github.com/molodoi/Jobs/blob/master/Ticme/Jobs/view/adminhtml/ui_component/jobs_job_listing.xml
